@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
-import { CategoryType } from './types';
+import { CategoryType, Memory } from './types';
 import CategorySelector from './components/CategorySelector';
 import MemoryCreator from './components/MemoryCreator';
+import MemoryPage from './components/MemoryPage';
+import { useMemoryStore } from './store/memoryStore';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
+  const [currentMemory, setCurrentMemory] = useState<Memory | null>(null);
+  const addMemory = useMemoryStore((state) => state.addMemory);
+
+  const handleMemoryCreated = (memoryData: Omit<Memory, 'id'>) => {
+    const memory = addMemory(memoryData);
+    setCurrentMemory(memory);
+  };
+
+  const handleBack = () => {
+    if (currentMemory) {
+      setCurrentMemory(null);
+    } else {
+      setSelectedCategory(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -28,10 +45,13 @@ function App() {
             </div>
             <CategorySelector onSelect={setSelectedCategory} />
           </>
+        ) : currentMemory ? (
+          <MemoryPage memory={currentMemory} onBack={handleBack} />
         ) : (
           <MemoryCreator 
             category={selectedCategory} 
-            onBack={() => setSelectedCategory(null)} 
+            onBack={handleBack}
+            onSubmit={handleMemoryCreated}
           />
         )}
       </main>

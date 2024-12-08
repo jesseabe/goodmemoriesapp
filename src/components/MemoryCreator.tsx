@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { CategoryType } from '../types';
+import { CategoryType, Memory } from '../types';
 import { Calendar, Image, X } from 'lucide-react';
 
 interface MemoryCreatorProps {
   category: CategoryType;
   onBack: () => void;
+  onSubmit: (memory: Omit<Memory, 'id'>) => void;
 }
 
-export default function MemoryCreator({ category, onBack }: MemoryCreatorProps) {
+export default function MemoryCreator({ category, onBack, onSubmit }: MemoryCreatorProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -18,7 +19,14 @@ export default function MemoryCreator({ category, onBack }: MemoryCreatorProps) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    onSubmit({
+      title,
+      description,
+      startDate,
+      photos,
+      category,
+      theme: 'default'
+    });
   };
 
   const validateAndAddPhoto = () => {
