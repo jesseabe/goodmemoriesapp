@@ -1,3 +1,9 @@
-# goodmemoriesapp
+# Good Memories App
 
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/jesseabe/goodmemoriesapp)
+![Alt text](image.png)
+
+
+![Alt text](image-1.png)
+
+
+![Alt text](image-2.png)
